@@ -264,8 +264,9 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
           ))}
         </motion.div>
 
-        {/* Main Content */}
+        {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Left Column */}
           <div className="lg:col-span-2 space-y-10">
             {/* Header */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -359,7 +360,7 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
             </div>
           </div>
 
-          {/* Sticky Booking Widget */}
+          {/* Right Column - Sticky Booking Widget */}
           <div className="lg:col-span-1">
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
@@ -429,7 +430,7 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
           </div>
         </div>
 
-        {/* Checkout Wizard - Now properly placed inside the container */}
+        {/* Checkout Wizard - Properly placed after the grid closes */}
         <CheckoutWizard
           isOpen={showCheckout}
           onClose={() => setShowCheckout(false)}
