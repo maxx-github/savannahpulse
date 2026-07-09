@@ -16,11 +16,11 @@ const hotelData = {
   reviews: 2150,
   description: "One of the most iconic hotels in the world, Giraffe Manor is an exclusive boutique hotel set in 12 acres of indigenous forest. Famous for its resident herd of Rothschild's giraffes who poke their long necks through the windows during breakfast, it offers a once-in-a-lifetime wildlife experience in the heart of Nairobi.",
   images: [
-    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200", // Manor exterior
-    "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600", // Giraffe/Savannah vibe
-    "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600", // Elegant room
-    "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600", // Breakfast/Tea
-    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600", // Garden/Forest
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
+    "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600",
+    "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600",
+    "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600",
+    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600",
   ],
   amenities: [
     { icon: FaTree, name: "Giraffe Feeding" },
@@ -270,29 +270,31 @@ export default function GiraffeManorPage() {
                 </div>
               )}
 
-              <button className="w-full bg-accent text-dark font-bold py-4 rounded-xl hover:bg-accent-hover transition-all hover:scale-105 mb-3">
+              <button 
+                onClick={() => setShowCheckout(true)}
+                className="w-full bg-accent text-dark font-bold py-4 rounded-xl hover:bg-accent-hover transition-all hover:scale-105 mb-3"
+              >
                 Reserve Now
-				onClick={() => setShowCheckout(true)}
               </button>
               <p className="text-xs text-muted text-center">You won't be charged yet</p>
             </motion.div>
           </div>
         </div>
+
+        <CheckoutWizard 
+          isOpen={showCheckout} 
+          onClose={() => setShowCheckout(false)} 
+          type="hotel"
+          summary={{
+            title: `Giraffe Manor - ${selectedRoom.name}`,
+            subtitle: `Max ${selectedRoom.guests} Guests • ${selectedRoom.bed}`,
+            dates: `${checkIn} to ${checkOut} (${nights} nights)`,
+            price: subtotal,
+            taxes: taxes,
+            total: total
+          }}
+        />
       </div>
-	  
-	        <CheckoutWizard 
-        isOpen={showCheckout} 
-        onClose={() => setShowCheckout(false)} 
-        type="hotel"
-        summary={{
-          title: `Giraffe Manor - ${selectedRoom.name}`,
-          subtitle: `Max ${selectedRoom.guests} Guests • ${selectedRoom.bed}`,
-          dates: `${checkIn} to ${checkOut} (${nights} nights)`,
-          price: subtotal,
-          taxes: taxes,
-          total: total
-        }}
-      />
     </div>
   );
 }
