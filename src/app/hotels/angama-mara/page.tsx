@@ -296,28 +296,32 @@ export default function HotelDetailsPage() {
                 </div>
               )}
 
-              <button className="w-full bg-accent text-dark font-bold py-4 rounded-xl hover:bg-accent-hover transition-all hover:scale-105 mb-3">
+              <button 
+                onClick={() => setShowCheckout(true)}
+                className="w-full bg-accent text-dark font-bold py-4 rounded-xl hover:bg-accent-hover transition-all hover:scale-105 mb-3"
+              >
                 Reserve Now
-				onClick={() => setShowCheckout(true)}
               </button>
               <p className="text-xs text-muted text-center">You won't be charged yet</p>
             </motion.div>
           </div>
         </div>
+
+        {/* Checkout Wizard - Properly placed inside the container */}
+        <CheckoutWizard 
+          isOpen={showCheckout} 
+          onClose={() => setShowCheckout(false)} 
+          type="hotel"
+          summary={{
+            title: `Angama Mara - ${selectedRoom.name}`,
+            subtitle: `Max ${selectedRoom.guests} Guests • ${selectedRoom.bed}`,
+            dates: `${checkIn} to ${checkOut} (${nights} nights)`,
+            price: subtotal,
+            taxes: taxes,
+            total: total
+          }}
+        />
       </div>
-	        <CheckoutWizard 
-        isOpen={showCheckout} 
-        onClose={() => setShowCheckout(false)} 
-        type="hotel"
-        summary={{
-          title: `Angama Mara - ${selectedRoom.name}`,
-          subtitle: `Max ${selectedRoom.guests} Guests • ${selectedRoom.bed}`,
-          dates: `${checkIn} to ${checkOut} (${nights} nights)`,
-          price: subtotal,
-          taxes: taxes,
-          total: total
-        }}
-      />
     </div>
   );
 }
