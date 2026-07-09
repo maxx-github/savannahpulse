@@ -1,4 +1,5 @@
 "use client";
+import CheckoutWizard from "@/components/CheckoutWizard";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,11 +16,11 @@ const hotelData = {
   reviews: 980,
   description: "Set on a pristine stretch of the Indian Ocean, Hemingways Watamu is an award-winning luxury beach resort. Blending Swahili architecture with contemporary elegance, it offers a tranquil escape with world-class diving, a rejuvenating spa, and exquisite seafood dining right on the beach.",
   images: [
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200", // Resort pool/ocean
-    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600", // Beach
-    "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600", // Luxury room
-    "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600", // Dining
-    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600", // Spa/Relaxation
+    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600",
+    "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600",
+    "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600",
+    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600",
   ],
   amenities: [
     { icon: FaWater, name: "Private Beach" },
@@ -269,28 +270,31 @@ export default function HemingwaysWatamuPage() {
                 </div>
               )}
 
-              <button className="w-full bg-accent text-dark font-bold py-4 rounded-xl hover:bg-accent-hover transition-all hover:scale-105 mb-3">
+              <button 
+                onClick={() => setShowCheckout(true)}
+                className="w-full bg-accent text-dark font-bold py-4 rounded-xl hover:bg-accent-hover transition-all hover:scale-105 mb-3"
+              >
                 Reserve Now
-				onClick={() => setShowCheckout(true)}
               </button>
               <p className="text-xs text-muted text-center">You won't be charged yet</p>
             </motion.div>
           </div>
         </div>
+
+        <CheckoutWizard 
+          isOpen={showCheckout} 
+          onClose={() => setShowCheckout(false)} 
+          type="hotel"
+          summary={{
+            title: `Hemingways Watamu - ${selectedRoom.name}`,
+            subtitle: `Max ${selectedRoom.guests} Guests • ${selectedRoom.bed}`,
+            dates: `${checkIn} to ${checkOut} (${nights} nights)`,
+            price: subtotal,
+            taxes: taxes,
+            total: total
+          }}
+        />
       </div>
-	        <CheckoutWizard 
-        isOpen={showCheckout} 
-        onClose={() => setShowCheckout(false)} 
-        type="hotel"
-        summary={{
-          title: `Hemingways Watamu - ${selectedRoom.name}`,
-          subtitle: `Max ${selectedRoom.guests} Guests • ${selectedRoom.bed}`,
-          dates: `${checkIn} to ${checkOut} (${nights} nights)`,
-          price: subtotal,
-          taxes: taxes,
-          total: total
-        }}
-      />
     </div>
   );
 }

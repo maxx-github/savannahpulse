@@ -1,9 +1,7 @@
 "use client";
-import CheckoutWizard from "@/components/CheckoutWizard";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FaStar, FaMapMarkerAlt, FaArrowRight } from "react-icons/fa";
-import { useState } from "react";
 
 const hotels = [
   {
@@ -11,15 +9,17 @@ const hotels = [
     rating: 4.9,
     name: "Giraffe Manor",
     location: "Nairobi",
+    slug: "giraffe-manor",
     amenities: ["Wifi", "Breakfast", "Airport Transfer"],
     price: "$320",
     img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
   },
   {
     tag: "Safari Lodge",
-    rating: 5,
+    rating: 5.0,
     name: "Angama Mara",
     location: "Maasai Mara",
+    slug: "angama-mara",
     amenities: ["Wifi", "All-Inclusive", "Game Drives"],
     price: "$580",
     img: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
@@ -29,6 +29,7 @@ const hotels = [
     rating: 4.8,
     name: "Hemingways Watamu",
     location: "Watamu Coast",
+    slug: "hemingways-watamu",
     amenities: ["Pool", "Spa", "Diving"],
     price: "$250",
     img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
@@ -36,61 +37,6 @@ const hotels = [
 ];
 
 export default function HotelsPage() {
-  const [selectedHotel, setSelectedHotel] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    checkIn: "",
-    checkOut: "",
-    guests: "2",
-  });
-
-  const handleReservationSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/bookings/hotel", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          hotelName: selectedHotel,
-          checkIn: formData.checkIn,
-          checkOut: formData.checkOut,
-          guests: parseInt(formData.guests),
-          roomType: "Standard",
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        alert(`Reservation submitted successfully! Your booking ID is: ${data.bookingId}`);
-        setSelectedHotel(null);
-        setFormData({
-          fullName: "",
-          email: "",
-          phone: "",
-          checkIn: "",
-          checkOut: "",
-          guests: "2",
-        });
-      } else {
-        alert("Failed to submit reservation. Please try again.");
-      }
-    } catch (error) {
-      console.error("Reservation error:", error);
-      alert("An error occurred. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="pt-24 pb-20 bg-dark min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
@@ -159,101 +105,18 @@ export default function HotelsPage() {
                     <span className="font-serif text-2xl font-bold text-accent">{hotel.price}</span>
                     <span className="text-muted text-sm"> /night</span>
                   </div>
-                  <button
-                    onClick={() => setSelectedHotel(hotel.name)}
+                  <Link
+                    href={`/hotels/${hotel.slug}`}
                     className="text-accent text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all"
                   >
-                    Reserve <FaArrowRight size={12} />
-                  </button>
+                    View Details <FaArrowRight size={12} />
+                  </Link>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
-
-      {selectedHotel && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-6"
-          onClick={() => setSelectedHotel(null)}
-        >
-          <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-card border border-card-border rounded-2xl p-8 max-w-md w-full"
-          >
-            <h3 className="font-serif text-2xl font-bold mb-2">Reserve {selectedHotel}</h3>
-            <p className="text-muted text-sm mb-6">Complete your reservation details</p>
-            <form onSubmit={handleReservationSubmit} className="space-y-4">
-              <input
-                type="text"
-                required
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted"
-              />
-              <input
-                type="email"
-                required
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted"
-              />
-              <input
-                type="tel"
-                placeholder="Phone"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted"
-              />
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-xs text-muted mb-1 block">Check-in</label>
-                  <input
-                    type="date"
-                    required
-                    value={formData.checkIn}
-                    onChange={(e) => setFormData({ ...formData, checkIn: e.target.value })}
-                    className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs text-muted mb-1 block">Check-out</label>
-                  <input
-                    type="date"
-                    required
-                    value={formData.checkOut}
-                    onChange={(e) => setFormData({ ...formData, checkOut: e.target.value })}
-                    className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white"
-                  />
-                </div>
-              </div>
-              <select
-                value={formData.guests}
-                onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white"
-              >
-                <option value="1">1 Guest</option>
-                <option value="2">2 Guests</option>
-                <option value="3">3 Guests</option>
-                <option value="4">4+ Guests</option>
-              </select>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-accent text-dark font-semibold py-3 rounded-xl hover:bg-accent-hover transition-all disabled:opacity-50"
-              >
-                {isSubmitting ? "Submitting..." : "Confirm Reservation"}
-              </button>
-            </form>
-          </motion.div>
-        </motion.div>
-      )}
     </div>
   );
 }
