@@ -1,5 +1,4 @@
 "use client";
-import CheckoutWizard from "@/components/CheckoutWizard";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +10,7 @@ import {
   FaShieldAlt, FaCheck, FaArrowLeft, FaCalendar, FaWhatsapp, FaArrowRight,
   FaRoad, FaSnowflake, FaCamera, FaMusic
 } from "react-icons/fa";
+import CheckoutWizard from "@/components/CheckoutWizard";
 
 const vehicleDatabase: Record<string, any> = {
   economy: {
@@ -202,18 +202,10 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
   const vehicleData = vehicleDatabase[vehicle];
 
   const [showCheckout, setShowCheckout] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState("");
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
-  const [formData, setFormData] = useState({
-    fullName: session?.user?.name || "",
-    email: session?.user?.email || "",
-    phone: "",
-    whatsapp: "",
-    specialRequests: "",
-  });
 
   if (!vehicleData) {
     return (
@@ -238,53 +230,15 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
   const total = subtotal + insurance;
 
   const handleCheckout = () => {
-  if (!pickupLocation || !pickupDate || !dropoffDate) {
-    alert("Please select pickup location and dates first.");
-    return;
-  }
-  // If not logged in, force login first. If logged in, open wizard.
-  if (status === "unauthenticated") {
-    router.push("/login?callbackUrl=" + window.location.pathname);
-    return;
-  }
-  setShowCheckout(true);
-};
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "car-hire",
-          vehicleCategory: vehicleData.category,
-          pickupLocation,
-          dropoffLocation: dropoffLocation || pickupLocation,
-          departureDate: pickupDate,
-          returnDate: dropoffDate,
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          whatsapp: formData.whatsapp,
-          specialRequests: formData.specialRequests,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        router.push(`/booking-success?ticketId=${data.ticketId}`);
-      } else {
-        alert("Failed to submit. Please try again.");
-      }
-    } catch (error) {
-      alert("An error occurred. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    if (!pickupLocation || !pickupDate || !dropoffDate) {
+      alert("Please select pickup location and dates first.");
+      return;
     }
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/car-hire/" + vehicle);
+      return;
+    }
+    setShowCheckout(true);
   };
 
   return (
@@ -476,59 +430,20 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
         </div>
       </div>
 
-      {/* Checkout Modal (Only shows after login) */}
-      {showCheckout && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-6 overflow-y-auto"
-          onClick={() => setShowCheckout(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-card border border-card-border rounded-2xl p-8 max-w-lg w-full my-8"
-          >
-            <h3 className="font-serif text-3xl font-bold mb-2">Complete Your Booking</h3>
-            <p className="text-muted text-sm mb-6">
-              {vehicleData.category} • {days} days • KES {total.toLocaleString()}
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="text-sm font-semibold mb-2 block">Full Name *</label>
-                <input type="text" required value={formData.fullName} onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-semibold mb-2 block">Email *</label>
-                  <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white" />
-                </div>
-                <div>
-                  <label className="text-sm font-semibold mb-2 block">Phone</label>
-                  <input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+254..." className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted" />
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-semibold mb-2 block">WhatsApp (for quick updates)</label>
-                <input type="tel" value={formData.whatsapp} onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })} placeholder="+254..." className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted" />
-              </div>
-              <div>
-                <label className="text-sm font-semibold mb-2 block">Special Requests</label>
-                <textarea rows={3} value={formData.specialRequests} onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })} placeholder="Child seat, extra driver, airport pickup..." className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted resize-none" />
-              </div>
-
-              <div className="flex gap-4 pt-4">
-                <button type="button" onClick={() => setShowCheckout(false)} className="flex-1 bg-card border border-card-border text-white font-semibold py-3 rounded-xl hover:bg-card-border transition-all">Cancel</button>
-                <button type="submit" disabled={isSubmitting} className="flex-1 bg-accent text-dark font-semibold py-3 rounded-xl hover:bg-accent-hover transition-all disabled:opacity-50">
-                  {isSubmitting ? "Submitting..." : "Confirm Booking"}
-                </button>
-              </div>
-            </form>
-          </motion.div>
-        </motion.div>
-      )}
+      {/* Checkout Wizard */}
+      <CheckoutWizard
+        isOpen={showCheckout}
+        onClose={() => setShowCheckout(false)}
+        type="car-hire"
+        summary={{
+          title: `${vehicleData.category} Rental`,
+          subtitle: `${pickupLocation} to ${dropoffLocation || pickupLocation}`,
+          dates: `${pickupDate} to ${dropoffDate} (${days} days)`,
+          price: subtotal,
+          taxes: insurance,
+          total: total
+        }}
+      />
 
       {/* JSON-LD */}
       <script
@@ -543,19 +458,7 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
             "priceRange": `KES ${vehicleData.pricePerDay} per day`,
             "aggregateRating": { "@type": "AggregateRating", "ratingValue": vehicleData.rating.toString(), "reviewCount": vehicleData.reviews.toString() }
           })
-      <CheckoutWizard
-        isOpen={showCheckout} 
-  onClose={() => setShowCheckout(false)} 
-  type="car-hire"
-  summary={{
-    title: `${vehicleData.category} Rental`,
-    subtitle: `${pickupLocation} to ${dropoffLocation || pickupLocation}`,
-    dates: `${pickupDate} to ${dropoffDate} (${days} days)`,
-    price: subtotal,
-    taxes: insurance,
-    total: total
-      />
-}}
+        }}
       />
     </div>
   );
