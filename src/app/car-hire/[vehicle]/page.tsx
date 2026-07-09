@@ -428,38 +428,38 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
             </motion.div>
           </div>
         </div>
+
+        {/* Checkout Wizard - Now properly placed inside the container */}
+        <CheckoutWizard
+          isOpen={showCheckout}
+          onClose={() => setShowCheckout(false)}
+          type="car-hire"
+          summary={{
+            title: `${vehicleData.category} Rental`,
+            subtitle: `${pickupLocation} to ${dropoffLocation || pickupLocation}`,
+            dates: `${pickupDate} to ${dropoffDate} (${days} days)`,
+            price: subtotal,
+            taxes: insurance,
+            total: total
+          }}
+        />
+
+        {/* JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "AutoRental",
+              "name": `SavannahPulse ${vehicleData.category} Car Hire`,
+              "description": vehicleData.description,
+              "url": `https://savannahpulse.co.ke/car-hire/${vehicle}`,
+              "priceRange": `KES ${vehicleData.pricePerDay} per day`,
+              "aggregateRating": { "@type": "AggregateRating", "ratingValue": vehicleData.rating.toString(), "reviewCount": vehicleData.reviews.toString() }
+            })
+          }}
+        />
       </div>
-
-      {/* Checkout Wizard */}
-      <CheckoutWizard
-        isOpen={showCheckout}
-        onClose={() => setShowCheckout(false)}
-        type="car-hire"
-        summary={{
-          title: `${vehicleData.category} Rental`,
-          subtitle: `${pickupLocation} to ${dropoffLocation || pickupLocation}`,
-          dates: `${pickupDate} to ${dropoffDate} (${days} days)`,
-          price: subtotal,
-          taxes: insurance,
-          total: total
-        }}
-      />
-
-      {/* JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "AutoRental",
-            "name": `SavannahPulse ${vehicleData.category} Car Hire`,
-            "description": vehicleData.description,
-            "url": `https://savannahpulse.co.ke/car-hire/${vehicle}`,
-            "priceRange": `KES ${vehicleData.pricePerDay} per day`,
-            "aggregateRating": { "@type": "AggregateRating", "ratingValue": vehicleData.rating.toString(), "reviewCount": vehicleData.reviews.toString() }
-          })
-        }}
-      />
     </div>
   );
 }
