@@ -274,7 +274,7 @@ export default function MaasaiMaraPage() {
       "@type": "TouristDestination",
       "name": "Maasai Mara National Reserve",
       "description": "Witness millions of wildebeest crossing the Mara River in one of nature's most spectacular events. Home to the Big Five.",
-      "url": "https://savannahpulse.co.ke/destinations/maasai-mara",
+      "url": "https://hospitalityarc.com/destinations/maasai-mara",
       "touristType": ["Wildlife Enthusiasts", "Photographers", "Safari Lovers", "Adventure Seekers"],
       "geo": {
         "@type": "GeoCoordinates",

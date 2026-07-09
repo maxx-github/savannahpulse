@@ -543,9 +543,8 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
             "priceRange": `KES ${vehicleData.pricePerDay} per day`,
             "aggregateRating": { "@type": "AggregateRating", "ratingValue": vehicleData.rating.toString(), "reviewCount": vehicleData.reviews.toString() }
           })
-		  
-		  <CheckoutWizard 
-  isOpen={showCheckout} 
+      <CheckoutWizard
+        isOpen={showCheckout} 
   onClose={() => setShowCheckout(false)} 
   type="car-hire"
   summary={{
@@ -555,9 +554,8 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
     price: subtotal,
     taxes: insurance,
     total: total
-  }}
-/>
-        }}
+      />
+}}
       />
     </div>
   );
