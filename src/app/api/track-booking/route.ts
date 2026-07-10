@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { ticketId, email } = body;
 
-    // Validate input
     if (!ticketId && !email) {
       return NextResponse.json(
         { error: 'Please provide either a ticket ID or email address' },
@@ -17,7 +16,6 @@ export async function POST(request: NextRequest) {
     let bookings;
 
     if (ticketId) {
-      // Search by ticket ID (partial match supported)
       bookings = await prisma.booking.findMany({
         where: {
           ticketId: {
@@ -27,55 +25,23 @@ export async function POST(request: NextRequest) {
         orderBy: { createdAt: 'desc' },
       });
     } else {
-      // Search by email - SQLite compatible (case-insensitive)
-      // Since SQLite doesn't support mode: 'insensitive', we search with lowercase
+      // SQLite doesn't support mode: 'insensitive', so we fetch all and filter
       const emailLower = email.trim().toLowerCase();
       
-      bookings = await prisma.booking.findMany({
-        where: {
-          email: emailLower,
-        },
+      const allBookings = await prisma.booking.findMany({
         orderBy: { createdAt: 'desc' },
       });
-
-      // If no exact match, try case-insensitive search
-      if (bookings.length === 0) {
-        bookings = await prisma.booking.findMany({
-          orderBy: { createdAt: 'desc' },
-        });
-        
-        // Filter in memory for case-insensitive match
-        bookings = bookings.filter(
-          b => b.email.toLowerCase() === emailLower
-        );
-      }
+      
+      // Filter in memory for case-insensitive match
+      bookings = allBookings.filter(
+        b => b.email.toLowerCase() === emailLower
+      );
     }
-
-    // Remove sensitive data before sending to client
-    const sanitizedBookings = bookings.map(booking => ({
-      id: booking.id,
-      ticketId: booking.ticketId,
-      type: booking.type,
-      status: booking.status,
-      paymentStatus: booking.paymentStatus,
-      createdAt: booking.createdAt,
-      from: booking.from,
-      to: booking.to,
-      departureDate: booking.departureDate,
-      returnDate: booking.returnDate,
-      passengers: booking.passengers,
-      class: booking.class,
-      fullName: booking.fullName,
-      email: booking.email,
-      phone: booking.phone,
-      whatsapp: booking.whatsapp,
-      specialRequests: booking.specialRequests,
-    }));
 
     return NextResponse.json({ 
       success: true, 
-      bookings: sanitizedBookings,
-      count: sanitizedBookings.length,
+      bookings,
+      count: bookings.length,
     });
   } catch (error) {
     console.error('Track booking error:', error);
