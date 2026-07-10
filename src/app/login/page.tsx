@@ -1,16 +1,35 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { FaGoogle, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { FaGoogle, FaEnvelope, FaLock, FaUser, FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
+  
   const [isRegister, setIsRegister] = useState(false);
+  const [callbackUrl, setCallbackUrl] = useState<string>('/bookings');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    setCallbackUrl(params.get('callbackUrl') || '/bookings');
+  }, []);
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  // Get callback URL from query params (set by NextAuth when redirecting from protected pages)
+
+  // If user is already logged in, redirect them
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push(callbackUrl);
+    }
+  }, [status, router, callbackUrl]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,33 +37,81 @@ export default function LoginPage() {
     setError("");
 
     if (isRegister) {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (res.ok) {
-        setIsRegister(false);
-        setLoading(false);
-      } else {
-        const data = await res.json();
-        setError(data.error || "Registration failed");
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        
+        if (res.ok) {
+          // Registration successful, now sign them in
+          const signInRes = await signIn("credentials", {
+            email: formData.email,
+            password: formData.password,
+            redirect: false,
+          });
+          
+          if (signInRes?.error) {
+            setError("Registration successful, but login failed. Please try signing in.");
+            setIsRegister(false);
+          } else {
+            router.push(callbackUrl);
+          }
+        } else {
+          const data = await res.json();
+          setError(data.error || "Registration failed");
+        }
+      } catch (err) {
+        setError("Network error. Please check your connection and try again.");
+      } finally {
         setLoading(false);
       }
     } else {
-      const res = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
-      if (res?.error) {
-        setError("Invalid email or password");
-      } else {
-        router.push("/bookings");
+      try {
+        const res = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+          callbackUrl: callbackUrl,
+        });
+        
+        if (res?.error) {
+          setError("Invalid email or password");
+        } else if (res?.ok) {
+          router.push(callbackUrl);
+        } else {
+          setError("Login failed. Please try again.");
+        }
+      } catch (err) {
+        setError("Network error. Please check your connection and try again.");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    try {
+      await signIn("google", { 
+        callbackUrl: callbackUrl,
+        redirect: true,
+      });
+    } catch (err) {
+      setError("Google sign-in failed. Please try again.");
+      setGoogleLoading(false);
+    }
+  };
+
+  // Show loading if checking session
+  if (status === "loading") {
+    return (
+      <div className="pt-24 pb-20 bg-dark min-h-screen flex items-center justify-center">
+        <FaSpinner className="animate-spin text-accent" size={48} />
+      </div>
+    );
+  }
 
   return (
     <div className="pt-24 pb-20 bg-dark min-h-screen flex items-center justify-center">
@@ -58,10 +125,16 @@ export default function LoginPage() {
         </h1>
 
         <button
-          onClick={() => signIn("google", { callbackUrl: "/bookings" })}
-          className="w-full bg-white text-dark font-semibold py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-200 transition-all mb-6"
+          onClick={handleGoogleSignIn}
+          disabled={googleLoading}
+          className="w-full bg-white text-dark font-semibold py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-200 transition-all mb-6 disabled:opacity-50"
         >
-          <FaGoogle className="text-red-500" /> Continue with Google
+          {googleLoading ? (
+            <FaSpinner className="animate-spin" />
+          ) : (
+            <FaGoogle className="text-red-500" />
+          )}
+          {googleLoading ? "Connecting..." : "Continue with Google"}
         </button>
 
         <div className="flex items-center gap-4 mb-6">
@@ -112,8 +185,9 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-accent text-dark font-semibold py-3 rounded-xl hover:bg-accent-hover transition-all disabled:opacity-50"
+            className="w-full bg-accent text-dark font-semibold py-3 rounded-xl hover:bg-accent-hover transition-all disabled:opacity-50 flex items-center justify-center gap-2"
           >
+            {loading && <FaSpinner className="animate-spin" />}
             {loading ? "Processing..." : isRegister ? "Create Account" : "Sign In"}
           </button>
         </form>

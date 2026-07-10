@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src --ext .js,.ts,.tsx --parser @typescript-eslint/parser --max-warnings 0"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",
@@ -25,14 +25,17 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
     "@types/node": "^20.11.0",
     "@types/nodemailer": "^6.4.0",
     "@types/react": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
     "autoprefixer": "^10.4.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.0.0",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.4.0",
-    "eslint": "^9.0.0",
-    "eslint-config-next": "^16.0.0"
+    "typescript": "^5.4.0"
   }
 }

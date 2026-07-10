@@ -19,5 +19,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	{ url: `${baseUrl}/car-hire`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
   ]
 }
-  ]
-}

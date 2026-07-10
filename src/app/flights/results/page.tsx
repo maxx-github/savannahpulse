@@ -1,8 +1,9 @@
 "use client";
+export const dynamic = 'force-dynamic';
 import CheckoutWizard from "@/components/CheckoutWizard";
 import { motion } from "framer-motion";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useMemo, useEffect } from "react";
 import { 
   FaPlane, FaClock, FaSuitcase, FaUtensils, FaWifi, FaCheck, FaFilter, FaArrowRight 
 } from "react-icons/fa";
@@ -94,14 +95,22 @@ const mockFlights = [
 ];
 
 export default function FlightResultsPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   
-  // Get search params (fallback to defaults)
-  const from = searchParams.get('from') || 'London (LHR)';
-  const to = searchParams.get('to') || 'Nairobi (NBO)';
-  const date = searchParams.get('date') || 'Jul 15, 2026';
-  const passengers = searchParams.get('passengers') || '1';
+  // Client-side read of search params (window-based to avoid Next hook prerender issues)
+  const [from, setFrom] = useState('London (LHR)');
+  const [to, setTo] = useState('Nairobi (NBO)');
+  const [date, setDate] = useState('Jul 15, 2026');
+  const [passengers, setPassengers] = useState('1');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    setFrom(params.get('from') || 'London (LHR)');
+    setTo(params.get('to') || 'Nairobi (NBO)');
+    setDate(params.get('date') || 'Jul 15, 2026');
+    setPassengers(params.get('passengers') || '1');
+  }, []);
 
   const [selectedFlight, setSelectedFlight] = useState<any>(null);
   const [showCheckout, setShowCheckout] = useState(false);
