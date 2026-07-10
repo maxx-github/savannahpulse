@@ -1,22 +1,23 @@
 "use client";
+export const dynamic = 'force-dynamic';
 import { motion } from "framer-motion";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaTicketAlt, FaWhatsapp, FaEnvelope, FaArrowRight } from "react-icons/fa";
 import { getTicketById, BookingTicket } from "@/lib/tickets";
 import Link from "next/link";
 
 export default function BookingSuccessPage() {
-  const searchParams = useSearchParams();
-  const ticketId = searchParams.get("ticketId");
   const [ticket, setTicket] = useState<BookingTicket | null>(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const ticketId = params.get('ticketId');
     if (ticketId) {
       const t = getTicketById(ticketId);
       setTicket(t);
     }
-  }, [ticketId]);
+  }, []);
 
   if (!ticket) {
     return (
