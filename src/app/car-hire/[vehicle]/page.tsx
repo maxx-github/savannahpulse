@@ -430,7 +430,7 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
           </div>
         </div>
 
-        {/* Checkout Wizard - Properly placed after the grid closes */}
+        {/* Checkout Wizard - Placed AFTER the grid closes */}
         <CheckoutWizard
           isOpen={showCheckout}
           onClose={() => setShowCheckout(false)}
