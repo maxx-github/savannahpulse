@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SessionProvider } from "next-auth/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
         </SessionProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
