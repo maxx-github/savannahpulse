@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://savannahpulse.co.ke",
+    url: "https://hospitalityarc.com",
     siteName: "SavannahPulse",
     title: "SavannahPulse - Discover the Heart of Kenya",
     description: "Book flights, find luxury stays, and discover authentic cultural experiences in Kenya.",

@@ -249,7 +249,7 @@ export default function TrackBookingPage() {
           <h3 className="font-serif text-xl font-bold mb-3">Can't find your booking?</h3>
           <p className="text-muted mb-6">Our team is here to help. Contact us directly and we'll locate your reservation.</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <a href="mailto:hello@savannahpulse.co.ke" className="bg-card border border-card-border px-6 py-3 rounded-xl hover:border-accent transition-all flex items-center gap-2">
+            <a href="mailto:hello@hospitalityarc.com" className="bg-card border border-card-border px-6 py-3 rounded-xl hover:border-accent transition-all flex items-center gap-2">
               <FaEnvelope className="text-accent" /> Email Support
             </a>
             <Link href="/contact" className="bg-card border border-card-border px-6 py-3 rounded-xl hover:border-accent transition-all flex items-center gap-2">

@@ -58,7 +58,7 @@ export const createBookingConfirmationEmail = (
 };
 
 export const createContactFormEmail = (data: any): EmailTemplate => ({
-  to: process.env.ADMIN_EMAIL || 'admin@savannahpulse.co.ke',
+  to: process.env.ADMIN_EMAIL || 'admin@hospitalityarc.com',
   subject: `📩 Contact Form: ${data.subject}`,
   html: `
     <div style="font-family: Arial; padding: 20px;">
@@ -72,7 +72,7 @@ export const createContactFormEmail = (data: any): EmailTemplate => ({
 });
 
 export const createAdminNotification = (type: string, data: any): EmailTemplate => ({
-  to: process.env.ADMIN_EMAIL || 'admin@savannahpulse.co.ke',
+  to: process.env.ADMIN_EMAIL || 'admin@hospitalityarc.com',
   subject: `🔔 New ${type} Submission`,
   html: `<p>New ${type} from ${data.fullName || data.email}</p>`,
 });
@@ -270,7 +270,7 @@ export const sendDigitalTicket = async (booking: any) => {
                 Need help? Contact us:
               </p>
               <p style="color: white; font-size: 13px; margin: 0;">
-                📧 hello@savannahpulse.co.ke &nbsp;&nbsp;|&nbsp;&nbsp; 📱 +254 700 000 000
+                📧 hello@hospitalityarc.com &nbsp;&nbsp;|&nbsp;&nbsp; 📱 +254 700 000 000
               </p>
             </td>
           </tr>
@@ -307,7 +307,7 @@ export const sendDigitalTicket = async (booking: any) => {
     // Send copy to admin
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
-      to: process.env.ADMIN_EMAIL || 'admin@savannahpulse.co.ke',
+      to: process.env.ADMIN_EMAIL || 'admin@hospitalityarc.com',
       subject: `📋 New Booking: ${booking.ticketId} (${booking.fullName})`,
       html: ticketHtml,
     });

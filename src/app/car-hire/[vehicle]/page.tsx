@@ -454,7 +454,7 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ vehicl
               "@type": "AutoRental",
               "name": `SavannahPulse ${vehicleData.category} Car Hire`,
               "description": vehicleData.description,
-              "url": `https://savannahpulse.co.ke/car-hire/${vehicle}`,
+              "url": `https://hospitalityarc.com/car-hire/${vehicle}`,
               "priceRange": `KES ${vehicleData.pricePerDay} per day`,
               "aggregateRating": { "@type": "AggregateRating", "ratingValue": vehicleData.rating.toString(), "reviewCount": vehicleData.reviews.toString() }
             })

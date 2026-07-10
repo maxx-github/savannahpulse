@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/login', '/bookings', '/api/'], // Keep private pages hidden from Google
     },
-    sitemap: 'https://savannahpulse.co.ke/sitemap.xml', // Replace with your domain
+    sitemap: 'https://hospitalityarc.com/sitemap.xml', // Replace with your domain
   }
 }

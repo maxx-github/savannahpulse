@@ -76,7 +76,7 @@ export default function BookingSuccessPage() {
               <FaEnvelope className="text-accent" size={24} />
               <div className="text-left">
                 <div className="font-semibold">Email Us</div>
-                <div className="text-xs text-muted">hello@savannahpulse.co.ke</div>
+                <div className="text-xs text-muted">hello@hospitalityarc.com</div>
               </div>
             </a>
             <a

@@ -582,7 +582,7 @@ export default function CarHirePage() {
             "@type": "CarRental",
             "name": "SavannahPulse Car Hire",
             "description": "Premium car hire services across Kenya with economy, SUV, 4x4 safari, and luxury vehicles.",
-            "url": "https://savannahpulse.co.ke/car-hire",
+            "url": "https://hospitalityarc.com/car-hire",
             "areaServed": {
               "@type": "Country",
               "name": "Kenya"
