@@ -1,44 +1,69 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-import { FaStar } from "react-icons/fa";
+import { FaMapMarkerAlt, FaArrowRight, FaUmbrellaBeach, FaTree, FaCity, FaMountain, FaHistory } from "react-icons/fa";
 
 const destinations = [
   {
-    tag: "Wildlife Safari",
-    rating: 4.9,
-    title: "Maasai Mara",
-    desc: "Witness millions of wildebeest crossing the Mara River in one of nature's most spectacular events. Home to the Big Five.",
-    price: "$850",
-    img: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800",
-    href: "/destinations/maasai-mara",
+    name: "Maasai Mara",
+    slug: "maasai-mara",
+    tagline: "The Great Migration",
+    description: "Witness the world's greatest wildlife spectacle in Kenya's premier safari destination. Home to the Big Five and the annual wildebeest migration, Maasai Mara offers unparalleled game viewing experiences.",
+    image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1200",
+    icon: FaTree,
+    category: "Safari",
+    highlights: ["Big Five", "Great Migration", "Hot Air Balloons", "Maasai Culture"],
   },
   {
-    tag: "Beach Escape",
-    rating: 4.8,
-    title: "Diani Beach",
-    desc: "Pristine white sands meet turquoise waters along Kenya's stunning coastline. Perfect for diving, snorkeling, and pure relaxation.",
-    price: "$620",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
-    href: "/destinations/diani-beach",
+    name: "Diani Beach",
+    slug: "diani-beach",
+    tagline: "Paradise Found",
+    description: "Pristine white sands and turquoise waters along Kenya's stunning Indian Ocean coast. Diani offers world-class beaches, water sports, and tropical relaxation.",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200",
+    icon: FaUmbrellaBeach,
+    category: "Beach",
+    highlights: ["White Sand Beaches", "Snorkeling", "Kite Surfing", "Beach Resorts"],
   },
   {
-    tag: "Mountain Trek",
-    rating: 4.7,
-    title: "Mount Kenya",
-    desc: "Trek through bamboo forests and alpine meadows to the snow-capped summit. A UNESCO World Heritage Site of breathtaking beauty.",
-    price: "$720",
-    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800",
-    href: "/destinations/mount-kenya",
+    name: "Lamu",
+    slug: "lamu",
+    tagline: "Timeless Culture",
+    description: "Step back in time in this UNESCO World Heritage Site with rich Swahili heritage. Explore ancient stone towns, dhow sailing, and pristine beaches.",
+    image: "https://images.unsplash.com/photo-151870976631-a6a7f45921c3?w=1200",
+    icon: FaHistory,
+    category: "Culture",
+    highlights: ["UNESCO Site", "Dhow Sailing", "Swahili Culture", "Ancient Architecture"],
   },
   {
-    tag: "Cultural Immersion",
-    rating: 4.9,
-    title: "Lamu Old Town",
-    desc: "Wander through centuries-old Swahili architecture, carved doorways, and hidden courtyards in East Africa's oldest living town.",
-    price: "$480",
-    img: "/images/destinations/card-lamu.jpg",
-    href: "/destinations/lamu-old-town",
+    name: "Nairobi",
+    slug: "nairobi",
+    tagline: "The Green City in the Sun",
+    description: "Kenya's vibrant capital where modern luxury meets wildlife and culture. Visit giraffe centers, national parks, and world-class restaurants.",
+    image: "https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=1200",
+    icon: FaCity,
+    category: "City",
+    highlights: ["Giraffe Centre", "National Park", "Fine Dining", "Shopping"],
+  },
+  {
+    name: "Kisumu",
+    slug: "kisumu",
+    tagline: "Lake Victoria's Gem",
+    description: "Discover historical sites and the beauty of Africa's largest lake. Explore fishing villages, bird sanctuaries, and rich Luo culture.",
+    image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1200",
+    icon: FaHistory,
+    category: "Historical",
+    highlights: ["Lake Victoria", "Bird Sanctuaries", "Historical Sites", "Local Culture"],
+  },
+  {
+    name: "Mount Kenya",
+    slug: "mount-kenya",
+    tagline: "Peak Adventure",
+    description: "Conquer Africa's second-highest peak through breathtaking alpine landscapes. Trek through diverse ecosystems from rainforest to glaciers.",
+    image: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=1200",
+    icon: FaMountain,
+    category: "Adventure",
+    highlights: ["Peak Climbing", "Alpine Trekking", "Glaciers", "Mountain Lodges"],
   },
 ];
 
@@ -46,6 +71,7 @@ export default function DestinationsPage() {
   return (
     <div className="pt-24 pb-20 bg-dark min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,52 +80,71 @@ export default function DestinationsPage() {
           <p className="text-accent tracking-[0.3em] text-sm font-semibold mb-4">
             EXPLORE KENYA
           </p>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-            Iconic Destinations
+          <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6">
+            Discover Our Destinations
           </h1>
-          <p className="text-muted max-w-2xl mx-auto">
-            From untamed wilderness to ancient coastal towns — every corner of Kenya holds a story waiting to be discovered.
+          <p className="text-muted max-w-3xl mx-auto text-lg">
+            From the vast savannahs of Maasai Mara to the pristine beaches of Diani, 
+            explore Kenya's most iconic destinations and find your perfect adventure.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Destinations Grid */}
+        <div className="space-y-20">
           {destinations.map((dest, i) => (
             <motion.div
-              key={i}
+              key={dest.slug}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center`}
             >
-              <Link href={dest.href}>
-                <div className="relative rounded-2xl overflow-hidden group cursor-pointer h-80 md:h-96">
-                  <img
-                    src={dest.img}
-                    alt={dest.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-accent text-dark text-xs font-semibold px-3 py-1 rounded-full">
-                      {dest.tag}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <div className="flex items-center gap-1 text-accent mb-2">
-                      <FaStar size={14} />
-                      <span className="text-sm font-semibold">{dest.rating}</span>
-                    </div>
-                    <h3 className="font-serif text-3xl font-bold mb-2">{dest.title}</h3>
-                    <p className="text-gray-300 text-sm mb-4 line-clamp-2">{dest.desc}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-accent font-semibold">From {dest.price}</span>
-                      <span className="text-white text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Discover →
+              {/* Image */}
+              <div className={`relative h-96 rounded-2xl overflow-hidden ${i % 2 === 1 ? "lg:order-2" : ""}`}>
+                <Image
+                  src={dest.image}
+                  alt={dest.name}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent"></div>
+                <div className="absolute bottom-6 left-6">
+                  <span className="bg-accent text-dark text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                    <dest.icon size={12} /> {dest.category}
+                  </span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className={i % 2 === 1 ? "lg:order-1" : ""}>
+                <h2 className="font-serif text-4xl font-bold mb-2">{dest.name}</h2>
+                <p className="text-accent text-lg mb-4">{dest.tagline}</p>
+                <p className="text-gray-300 leading-relaxed mb-6">{dest.description}</p>
+                
+                {/* Highlights */}
+                <div className="mb-8">
+                  <h3 className="font-semibold text-white mb-3">Highlights</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {dest.highlights.map((highlight) => (
+                      <span
+                        key={highlight}
+                        className="bg-card border border-card-border text-sm px-3 py-1 rounded-full text-muted"
+                      >
+                        {highlight}
                       </span>
-                    </div>
+                    ))}
                   </div>
                 </div>
-              </Link>
+
+                {/* CTA */}
+                <Link
+                  href={`/destinations/${dest.slug}`}
+                  className="inline-flex items-center gap-2 bg-accent text-dark px-6 py-3 rounded-xl font-semibold hover:bg-accent-hover transition-all hover:scale-105"
+                >
+                  Explore {dest.name} <FaArrowRight />
+                </Link>
+              </div>
             </motion.div>
           ))}
         </div>
