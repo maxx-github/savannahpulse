@@ -1,189 +1,107 @@
-"use client";
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+const HOST_EMAIL = "info@hospitalityarc.com";
 
-type Props = {
-  destinationName: string;
-};
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
 
-export default function DestinationBookingButton({ destinationName }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+    const {
+      destination,
+      travelDate,
+      travelers,
+      packageType,
+      fullName,
+      email,
+      phone,
+      specialRequests,
+    } = body;
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    date: "",
-    travelers: "",
-    specialRequests: "",
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const travelers = Number(formData.travelers);
-
-    if (!formData.fullName || !formData.email || !formData.date || !formData.travelers) {
-      alert("Please complete the required fields.");
-      return;
+    if (!destination || !travelDate || !fullName || !email) {
+      return NextResponse.json(
+        { success: false, message: "Missing required booking fields." },
+        { status: 400 }
+      );
     }
 
-    if (!Number.isFinite(travelers) || travelers < 1) {
-      alert("Please enter a valid number of travelers.");
-      return;
-    }
+    const bookingId = `HB-${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 8)
+      .toUpperCase()}`;
 
-    setIsSubmitting(true);
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: Number(process.env.SMTP_PORT || 587) === 465,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
 
-    try {
-      const response = await fetch("/api/bookings/destination", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          destination: destinationName,
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          travelDate: formData.date,
-          travelers,
-          specialRequests: formData.specialRequests,
-          packageType: "Standard",
-        }),
-      });
+    const customerHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color:#1a1a1a;">Booking Confirmation</h2>
+        <p>Hi ${fullName},</p>
+        <p>Thank you for your enquiry. We have received your booking request for <strong>${destination}</strong>.</p>
 
-      const data = await response.json();
+        <p><strong>Booking ID:</strong> ${bookingId}</p>
+        <p><strong>Travel Date:</strong> ${travelDate}</p>
+        <p><strong>Travelers:</strong> ${travelers}</p>
+        <p><strong>Package:</strong> ${packageType || "Standard"}</p>
+        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+        <p><strong>Special Requests:</strong> ${specialRequests || "None"}</p>
 
-      if (!response.ok) {
-        throw new Error(data.message || "Booking failed");
-      }
+        <p>Our team will contact you shortly to confirm availability and finalise the itinerary.</p>
+        <p>Warm regards,<br />HospitalityArc</p>
+      </div>
+    `;
 
-      alert(`Booking submitted successfully! Your booking ID is: ${data.bookingId}`);
+    const hostHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color:#1a1a1a;">New Destination Booking</h2>
+        <p><strong>Booking ID:</strong> ${bookingId}</p>
+        <p><strong>Destination:</strong> ${destination}</p>
+        <p><strong>Customer Name:</strong> ${fullName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+        <p><strong>Travel Date:</strong> ${travelDate}</p>
+        <p><strong>Travelers:</strong> ${travelers}</p>
+        <p><strong>Package:</strong> ${packageType || "Standard"}</p>
+        <p><strong>Special Requests:</strong> ${specialRequests || "None"}</p>
+      </div>
+    `;
 
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        date: "",
-        travelers: "",
-        specialRequests: "",
-      });
+    await transporter.sendMail({
+      from: `"HospitalityArc" <${process.env.SMTP_FROM || HOST_EMAIL}>`,
+      to: HOST_EMAIL,
+      replyTo: email,
+      subject: `New booking: ${destination} - ${bookingId}`,
+      html: hostHtml,
+    });
 
-      setIsOpen(false);
-    } catch (error: any) {
-      console.error("Booking failed:", error);
-      alert(error.message || "An error occurred. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    await transporter.sendMail({
+      from: `"HospitalityArc" <${process.env.SMTP_FROM || HOST_EMAIL}>`,
+      to: email,
+      subject: `Your booking confirmation - ${bookingId}`,
+      html: customerHtml,
+    });
 
-  return (
-    <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="w-full bg-accent text-dark font-semibold py-3 rounded-xl hover:bg-accent-hover transition-all hover:scale-105"
-      >
-        Book This Experience
-      </button>
+    return NextResponse.json({
+      success: true,
+      bookingId,
+      message: "Booking submitted successfully.",
+    });
+  } catch (error: any) {
+    console.error("Booking submission error:", error);
 
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-6"
-          onClick={() => setIsOpen(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-card border border-card-border rounded-2xl p-8 max-w-md w-full"
-          >
-            <h3 className="font-serif text-2xl font-bold mb-6">
-              Book {destinationName}
-            </h3>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="fullName"
-                required
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={handleChange}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted"
-              />
-
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted"
-              />
-
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted"
-              />
-
-              <input
-                type="date"
-                name="date"
-                required
-                value={formData.date}
-                onChange={handleChange}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white"
-              />
-
-              <input
-                type="number"
-                name="travelers"
-                required
-                min={1}
-                placeholder="Travelers"
-                value={formData.travelers}
-                onChange={handleChange}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted"
-              />
-
-              <textarea
-                name="specialRequests"
-                rows={3}
-                placeholder="Special Requests (optional)"
-                value={formData.specialRequests}
-                onChange={handleChange}
-                className="w-full bg-darker border border-card-border rounded-lg px-4 py-3 text-white placeholder-muted resize-none"
-              ></textarea>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-accent text-dark font-semibold py-3 rounded-xl hover:bg-accent-hover transition-all disabled:opacity-50"
-              >
-                {isSubmitting ? "Submitting..." : "Confirm Booking"}
-              </button>
-            </form>
-          </motion.div>
-        </motion.div>
-      )}
-    </>
-  );
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Unable to submit booking.",
+      },
+      { status: 500 }
+    );
+  }
 }
