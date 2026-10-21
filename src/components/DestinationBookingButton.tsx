@@ -32,7 +32,12 @@ export default function DestinationBookingButton({ destinationName }: Props) {
 
     const travelers = Number(formData.travelers);
 
-    if (!formData.fullName || !formData.email || !formData.date || !formData.travelers) {
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.date ||
+      !formData.travelers
+    ) {
       alert("Please complete the required fields.");
       return;
     }
@@ -68,7 +73,9 @@ export default function DestinationBookingButton({ destinationName }: Props) {
         throw new Error(data.message || "Booking failed");
       }
 
-      alert(`Booking submitted successfully! Your booking ID is: ${data.bookingId}`);
+      alert(
+        `Booking submitted successfully! Your booking ID is: ${data.bookingId}`
+      );
 
       setFormData({
         fullName: "",
