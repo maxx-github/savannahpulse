@@ -108,7 +108,7 @@ export default function DestinationsPage() {
           </h1>
           <p className="text-muted max-w-3xl mx-auto text-lg">
             From the vast savannahs of Maasai Mara to the pristine beaches of Diani and
-            Mombasa, explore Kenya's most iconic destinations and find your perfect adventure.
+            Mombasa, explore Kenya&apos;s most iconic destinations and find your perfect adventure.
           </p>
         </motion.div>
 
@@ -122,7 +122,11 @@ export default function DestinationsPage() {
               viewport={{ once: true }}
               className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
             >
-              <div className={`relative h-96 rounded-2xl overflow-hidden ${i % 2 === 1 ? "lg:order-2" : ""}`}>
+              <div
+                className={`relative h-96 rounded-2xl overflow-hidden ${
+                  i % 2 === 1 ? "lg:order-2" : ""
+                }`}
+              >
                 <Link href={`/destinations/${dest.slug}`} className="block h-full w-full">
                   <Image
                     src={dest.image}
