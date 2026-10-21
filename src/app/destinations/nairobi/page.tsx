@@ -89,8 +89,8 @@ export default function NairobiPage() {
     <div className="pt-20 bg-dark min-h-screen">
       <section className="relative h-[70vh] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=1600"
-          alt="Nairobi city skyline"
+          src="/images/destinations/nairobi.jpg"
+          alt="Nairobi skyline and wildlife"
           fill
           className="object-cover"
           priority
