@@ -29,7 +29,7 @@ const destinations = [
     tagline: "Paradise Found",
     description:
       "Pristine white sands and turquoise waters along Kenya's stunning Indian Ocean coast. Diani offers world-class beaches, water sports, and tropical relaxation.",
-    image: "/images/destinations/card-diani-beach.png",
+    image: "/images/destinations/card-diani.jpg",
     icon: FaUmbrellaBeach,
     category: "Beach",
     highlights: ["White Sand Beaches", "Snorkeling", "Kite Surfing", "Beach Resorts"],
@@ -122,12 +122,16 @@ export default function DestinationsPage() {
               viewport={{ once: true }}
               className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
             >
-              <div
-                className={`relative h-96 rounded-2xl overflow-hidden ${
-                  i % 2 === 1 ? "lg:order-2" : ""
-                }`}
-              >
-                <Image src={dest.image} alt={dest.name} fill className="object-cover" />
+              <div className={`relative h-96 rounded-2xl overflow-hidden ${i % 2 === 1 ? "lg:order-2" : ""}`}>
+                <Link href={`/destinations/${dest.slug}`} className="block h-full w-full">
+                  <Image
+                    src={dest.image}
+                    alt={dest.name}
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </Link>
+
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent"></div>
                 <div className="absolute bottom-6 left-6">
                   <span className="bg-accent text-dark text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
