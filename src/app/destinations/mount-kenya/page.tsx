@@ -17,16 +17,16 @@ const highlights = [
 const hiddenGems = [
   {
     title: "Kirinyaga - The Mountain of God",
-    desc: "To the Kikuyu people, Mount Kenya is sacred - they call it 'Kirinyaga' (Mountain of Whiteness). It's believed to be the throne of Ngai, their creator god. Traditional ceremonies are still held on its slopes."
+    desc: "To the Kikuyu people, Mount Kenya is sacred - they call it 'Kirinyaga' (Mountain of Whiteness). It is believed to be the throne of Ngai, their creator god. Traditional ceremonies and cultural stories are still tied to the mountain.",
   },
   {
     title: "Mau Mau Caves",
-    desc: "Hidden caves used by freedom fighters during Kenya's independence struggle in the 1950s. These natural shelters provided refuge and remain a powerful symbol of resistance."
+    desc: "Hidden caves used by freedom fighters during Kenya's independence struggle in the 1950s. These natural shelters provided refuge and remain a powerful symbol of resistance and resilience.",
   },
   {
     title: "Ancient Volcano",
-    desc: "Mount Kenya is an extinct volcano that last erupted 3.1 million years ago. The current peaks are remnants of the original volcanic cone that once stood over 6,500 meters tall."
-  }
+    desc: "Mount Kenya is an extinct volcano that last erupted 3.1 million years ago. The current peaks are remnants of the original volcanic cone that once stood over 6,500 meters tall.",
+  },
 ];
 
 export default function MountKenyaPage() {
@@ -88,7 +88,13 @@ export default function MountKenyaPage() {
   return (
     <div className="pt-20 bg-dark min-h-screen">
       <section className="relative h-[70vh] overflow-hidden">
-        <Image src="/images/heroes/card-mount-kenya.jpg" alt="Mount Kenya" fill className="object-cover" priority />
+        <Image
+          src="/images/destinations/card-mount-kenya.jpg"
+          alt="Mount Kenya"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-7xl mx-auto">
           <Link
@@ -102,7 +108,7 @@ export default function MountKenyaPage() {
             Mountain Trek
           </span>
           <h1 className="font-serif text-5xl md:text-7xl font-bold mb-2">Mount Kenya</h1>
-          <p className="text-accent text-lg">Africa's Second Peak</p>
+          <p className="text-accent text-lg">Africa&apos;s Second Peak</p>
         </div>
       </section>
 
@@ -112,10 +118,14 @@ export default function MountKenyaPage() {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
               <h2 className="font-serif text-3xl font-bold mb-6">About This Destination</h2>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Rising to 5,199 meters, Mount Kenya is Africa's second-highest peak and a UNESCO World Heritage Site. Its diverse ecosystems range from dense bamboo forests to alpine meadows and glacial landscapes. The trek rewards adventurers with breathtaking panoramas, rare wildlife encounters, and the profound satisfaction of standing atop one of Africa's most majestic mountains.
+                Rising to 5,199 meters, Mount Kenya is Africa&apos;s second-highest peak and a UNESCO
+                World Heritage Site. Its diverse ecosystems range from dense bamboo forests to alpine
+                meadows and glacial ridges.
               </p>
               <p className="text-gray-300 leading-relaxed mb-8">
-                Despite being on the equator, Mount Kenya's glaciers have existed for over 3 million years. The mountain is home to unique species like the Mount Kenya mole shrew and the giant lobelia, found nowhere else on Earth.
+                Despite being on the equator, Mount Kenya&apos;s glaciers have existed for over 3 million
+                years. The mountain is home to unique species, unforgettable trekking routes, and a
+                dramatic landscape that feels both remote and sacred.
               </p>
 
               <h3 className="font-serif text-2xl font-bold mb-6">Highlights</h3>
@@ -135,7 +145,9 @@ export default function MountKenyaPage() {
                 ))}
               </div>
 
-              <h3 className="font-serif text-2xl font-bold mb-6 text-accent">Hidden Gems & Cultural Secrets</h3>
+              <h3 className="font-serif text-2xl font-bold mb-6 text-accent">
+                Hidden Gems & Cultural Secrets
+              </h3>
               <div className="space-y-6 mb-8">
                 {hiddenGems.map((gem, i) => (
                   <motion.div
@@ -265,63 +277,6 @@ export default function MountKenyaPage() {
           </motion.div>
         </motion.div>
       )}
-	  
-	  <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "TouristDestination",
-      "name": "Mount Kenya",
-      "description": "Trek through bamboo forests and alpine meadows to the snow-capped summit. A UNESCO World Heritage Site of breathtaking beauty.",
-      "url": "https://hospitalityarc.com/destinations/mount-kenya",
-      "touristType": ["Trekkers", "Mountaineers", "Nature Lovers", "Adventure Seekers"],
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "-0.1521",
-        "longitude": "37.3084"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "Kenya",
-        "addressRegion": "Central Kenya"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "720",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.7",
-        "reviewCount": "1523"
-      },
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "Elevation",
-          "value": "5,199 meters (17,057 ft)"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Best Time to Climb",
-          "value": "January to February, August to September"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Trek Duration",
-          "value": "4-6 days"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "UNESCO Status",
-          "value": "World Heritage Site"
-        }
-      ]
-    })
-  }}
-/>
     </div>
   );
 }
