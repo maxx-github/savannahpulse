@@ -2,7 +2,14 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowRight, FaUmbrellaBeach, FaTree, FaCity, FaMountain, FaHistory } from "react-icons/fa";
+import {
+  FaArrowRight,
+  FaUmbrellaBeach,
+  FaTree,
+  FaCity,
+  FaMountain,
+  FaHistory,
+} from "react-icons/fa";
 
 const destinations = [
   {
@@ -11,7 +18,8 @@ const destinations = [
     tagline: "The Great Migration",
     description:
       "Witness the world's greatest wildlife spectacle in Kenya's premier safari destination. Home to the Big Five and the annual wildebeest migration, Maasai Mara offers unparalleled game viewing and iconic savannah landscapes.",
-    image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1200",
+    image:
+      "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1200&auto=format&fit=crop&q=80",
     icon: FaTree,
     category: "Safari",
     highlights: ["Big Five", "Great Migration", "Hot Air Balloons", "Maasai Culture"],
@@ -22,7 +30,8 @@ const destinations = [
     tagline: "Paradise Found",
     description:
       "Pristine white sands and turquoise waters along Kenya's stunning Indian Ocean coast. Diani offers world-class beaches, water sports, and tropical relaxation.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&auto=format&fit=crop&q=80",
     icon: FaUmbrellaBeach,
     category: "Beach",
     highlights: ["White Sand Beaches", "Snorkeling", "Kite Surfing", "Beach Resorts"],
@@ -33,7 +42,8 @@ const destinations = [
     tagline: "Timeless Culture",
     description:
       "Step back in time in this UNESCO World Heritage Site with rich Swahili heritage. Explore ancient stone towns, dhow sailing, and pristine beaches.",
-    image: "https://images.unsplash.com/photo-151870976631-a6a7f45921c3?w=1200",
+    image:
+      "https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?w=1200&auto=format&fit=crop&q=80",
     icon: FaHistory,
     category: "Culture",
     highlights: ["UNESCO Site", "Dhow Sailing", "Swahili Culture", "Ancient Architecture"],
@@ -43,8 +53,9 @@ const destinations = [
     slug: "nairobi",
     tagline: "The Green City in the Sun",
     description:
-      "Kenya's vibrant capital where modern luxury meets wildlife and culture. Visit giraffe centers, national parks, and world-class restaurants.",
-    image: "https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=1200",
+      "Kenya's vibrant capital where modern luxury meets wildlife and culture. Visit giraffe centres, national parks, and world-class restaurants.",
+    image:
+      "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=1200&auto=format&fit=crop&q=80",
     icon: FaCity,
     category: "City",
     highlights: ["Giraffe Centre", "National Park", "Fine Dining", "Shopping"],
@@ -55,10 +66,23 @@ const destinations = [
     tagline: "Lake Victoria's Gem",
     description:
       "Discover historical sites and the beauty of Africa's largest lake. Explore fishing villages, bird sanctuaries, and rich Luo culture.",
-    image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1200",
+    image:
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&auto=format&fit=crop&q=80",
     icon: FaHistory,
     category: "Historical",
     highlights: ["Lake Victoria", "Bird Sanctuaries", "Historical Sites", "Local Culture"],
+  },
+  {
+    name: "Mombasa",
+    slug: "mombasa",
+    tagline: "Swahili Coast",
+    description:
+      "Experience the vibrant culture, oceanfront beaches, and historic charm of Kenya's coastal capital. Mombasa blends relaxed beach days with UNESCO heritage, seafood, and lively waterfront energy.",
+    image:
+      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1200&auto=format&fit=crop&q=80",
+    icon: FaUmbrellaBeach,
+    category: "Beach",
+    highlights: ["Fort Jesus", "Old Town", "Coral Reefs", "Beach Resorts", "Swahili Cuisine"],
   },
   {
     name: "Mount Kenya",
@@ -66,7 +90,8 @@ const destinations = [
     tagline: "Peak Adventure",
     description:
       "Conquer Africa's second-highest peak through breathtaking alpine landscapes. Trek through diverse ecosystems from rainforest to glaciers.",
-    image: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=1200",
+    image:
+      "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=1200&auto=format&fit=crop&q=80",
     icon: FaMountain,
     category: "Adventure",
     highlights: ["Peak Climbing", "Alpine Trekking", "Glaciers", "Mountain Lodges"],
@@ -89,8 +114,8 @@ export default function DestinationsPage() {
             Discover Our Destinations
           </h1>
           <p className="text-muted max-w-3xl mx-auto text-lg">
-            From the vast savannahs of Maasai Mara to the pristine beaches of Diani,
-            explore Kenya's most iconic destinations and find your perfect adventure.
+            From the vast savannahs of Maasai Mara to the pristine beaches of Diani and
+            Mombasa, explore Kenya's most iconic destinations and find your perfect adventure.
           </p>
         </motion.div>
 
