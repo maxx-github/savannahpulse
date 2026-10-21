@@ -89,8 +89,8 @@ export default function KisumuPage() {
     <div className="pt-20 bg-dark min-h-screen">
       <section className="relative h-[70vh] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600&auto=format&fit=crop&q=80"
-          alt="Kisumu Lake Victoria"
+          src="/images/destinations/kisumu-lake-victoria.jpg"
+          alt="Lake Victoria in Kisumu"
           fill
           className="object-cover"
           priority
