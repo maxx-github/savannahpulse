@@ -2,34 +2,34 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { FaStar, FaCalendar, FaClock, FaUsers, FaArrowLeft, FaShip } from "react-icons/fa";
+import { FaStar, FaCalendar, FaClock, FaUsers, FaArrowLeft, FaCity } from "react-icons/fa";
 import { useState } from "react";
 
 const highlights = [
-  "Lake Victoria excursions",
-  "Birdwatching and wetlands",
-  "Fishing villages and local culture",
-  "Historic riverfront experiences",
-  "Luo community and cuisine",
-  "Sunset views over the lake",
+  "Giraffe Centre",
+  "Nairobi National Park",
+  "City culture and nightlife",
+  "Fine dining and rooftop lounges",
+  "Shopping in Westlands and Karen",
+  "Wildlife close to the capital",
 ];
 
 const hiddenGems = [
   {
-    title: "Lake Victoria Waterfront",
-    desc: "Kisumu brings the beauty of Africa's largest lake into a lived-in, vibrant cityscape. Sunset by the lakefront is one of the most memorable experiences in western Kenya.",
+    title: "Nairobi National Park",
+    desc: "Only a short drive from the city center, this park offers iconic wildlife viewing with Nairobi's skyline as the backdrop. You can spot rhinos, lions, giraffes, and buffalo without leaving the capital.",
   },
   {
-    title: "Birding at the Papyrus Wetlands",
-    desc: "The city is a gateway to extraordinary birdlife, especially around the wetlands and marsh areas where many native and migratory species can be seen.",
+    title: "The Karen Blixen Museum",
+    desc: "This historic home captures the spirit of colonial-era Nairobi and offers a beautiful cultural and literary stop for travelers who want a slower, more reflective city experience.",
   },
   {
-    title: "Luo Culture and Storytelling",
-    desc: "Kisumu offers a rich cultural experience shaped by Luo traditions, language, music, and cuisine, giving visitors a deeper understanding of the region beyond the shoreline.",
+    title: "The Giraffe Centre",
+    desc: "A family favorite and one of Nairobi's signature experiences, where visitors can get up close with the endangered Rothschild giraffe in a conservation-focused setting.",
   },
 ];
 
-export default function KisumuPage() {
+export default function NairobiPage() {
   const [showBooking, setShowBooking] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ export default function KisumuPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          destination: "Kisumu",
+          destination: "Nairobi",
           travelDate: formData.date,
           travelers: parseInt(formData.travelers),
           packageType: "Standard",
@@ -89,8 +89,8 @@ export default function KisumuPage() {
     <div className="pt-20 bg-dark min-h-screen">
       <section className="relative h-[70vh] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1600"
-          alt="Kisumu waterfront"
+          src="https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=1600"
+          alt="Nairobi city skyline"
           fill
           className="object-cover"
           priority
@@ -105,10 +105,10 @@ export default function KisumuPage() {
             Back to Destinations
           </Link>
           <span className="inline-block bg-accent text-dark text-xs font-semibold px-3 py-1 rounded-full mb-4">
-            Lakeside Heritage
+            City & Wildlife
           </span>
-          <h1 className="font-serif text-5xl md:text-7xl font-bold mb-2">Kisumu</h1>
-          <p className="text-accent text-lg">Lake Victoria&apos;s Gem</p>
+          <h1 className="font-serif text-5xl md:text-7xl font-bold mb-2">Nairobi</h1>
+          <p className="text-accent text-lg">The Green City in the Sun</p>
         </div>
       </section>
 
@@ -118,15 +118,15 @@ export default function KisumuPage() {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
               <h2 className="font-serif text-3xl font-bold mb-6">About This Destination</h2>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Kisumu is Kenya&apos;s third-largest city and the gateway to Lake Victoria, the
-                largest lake in Africa by surface area. It is a lively city with a relaxed pace,
-                deep cultural roots, and scenic shoreline views.
+                Nairobi is Kenya&apos;s dynamic capital city, a place where modern life meets nature
+                in a way that is uniquely African. It is one of the few capital cities in the world
+                where you can watch wildlife just outside the city center.
               </p>
               <p className="text-gray-300 leading-relaxed mb-8">
-                Known for its warm people, lakeside sunsets, and rich Luo heritage, Kisumu offers
-                visitors an authentic western Kenya experience with a blend of nature, culture, and
-                local flavor. It is ideal for travelers seeking a slower and more intimate
-                destination.
+                The city blends culture, business, cuisine, and adventure, offering visitors a
+                compelling mix of urban energy, local heritage, and easy access to world-class
+                safari experiences. From vibrant neighborhoods to conservation hubs, Nairobi is
+                both a gateway and a destination.
               </p>
 
               <h3 className="font-serif text-2xl font-bold mb-6">Highlights</h3>
@@ -140,7 +140,7 @@ export default function KisumuPage() {
                     viewport={{ once: true }}
                     className="bg-card border border-card-border rounded-xl p-4 flex items-center gap-3"
                   >
-                    <FaShip className="text-accent flex-shrink-0" />
+                    <FaCity className="text-accent flex-shrink-0" />
                     <span className="text-sm">{item}</span>
                   </motion.div>
                 ))}
@@ -174,17 +174,17 @@ export default function KisumuPage() {
           >
             <div className="flex items-center gap-2 mb-4">
               <FaStar className="text-accent" />
-              <span className="font-bold">4.7</span>
+              <span className="font-bold">4.8</span>
               <span className="text-muted text-sm">Excellent</span>
             </div>
             <div className="mb-6">
-              <span className="font-serif text-4xl font-bold text-accent">$360</span>
+              <span className="font-serif text-4xl font-bold text-accent">$420</span>
               <span className="text-muted text-sm"> / person</span>
             </div>
             <div className="space-y-3 mb-6">
               <div className="flex items-center gap-3 text-sm">
                 <FaCalendar className="text-accent" />
-                <span className="text-muted">Best between June and October</span>
+                <span className="text-muted">Year-round city breaks</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <FaClock className="text-accent" />
@@ -192,7 +192,7 @@ export default function KisumuPage() {
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <FaUsers className="text-accent" />
-                <span className="text-muted">2–8 travelers</span>
+                <span className="text-muted">2–10 travelers</span>
               </div>
             </div>
             <button
@@ -218,7 +218,7 @@ export default function KisumuPage() {
             onClick={(e) => e.stopPropagation()}
             className="bg-card border border-card-border rounded-2xl p-8 max-w-md w-full"
           >
-            <h3 className="font-serif text-2xl font-bold mb-6">Book Kisumu Experience</h3>
+            <h3 className="font-serif text-2xl font-bold mb-6">Book Nairobi Experience</h3>
             <form onSubmit={handleBookingSubmit} className="space-y-4">
               <input
                 type="text"
