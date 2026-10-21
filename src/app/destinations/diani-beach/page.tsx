@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { FaStar, FaCalendar, FaClock, FaUsers, FaArrowLeft } from "react-icons/fa";
+import { FaStar, FaCalendar, FaClock, FaUsers, FaArrowLeft, FaUmbrellaBeach } from "react-icons/fa";
 import { useState } from "react";
 
 const highlights = [
@@ -12,6 +12,21 @@ const highlights = [
   "Coral reef exploration",
   "Beach yoga & wellness",
   "Local seafood cuisine",
+];
+
+const hiddenGems = [
+  {
+    title: "The White Sand Stretch",
+    desc: "Diani Beach’s 17-kilometre coastline is among Kenya’s most pristine stretches of shore, with powdery sand and calm, clear waters ideal for both relaxation and water adventures.",
+  },
+  {
+    title: "The Coral Reef Front",
+    desc: "Just offshore, vibrant coral gardens and marine life create some of the best snorkeling and diving conditions on the Kenyan coast.",
+  },
+  {
+    title: "The Coastal Culture",
+    desc: "Beyond the beach, local Swahili culture, seafood markets, and laid-back beach clubs bring a relaxed rhythm that makes Diani feel both luxurious and authentic.",
+  },
 ];
 
 export default function DianiBeachPage() {
@@ -73,7 +88,13 @@ export default function DianiBeachPage() {
   return (
     <div className="pt-20 bg-dark min-h-screen">
       <section className="relative h-[70vh] overflow-hidden">
-        <Image src="/images/heroes/diani-beach.jpg" alt="Diani Beach" fill className="object-cover" priority />
+        <Image
+          src="/images/destinations/diani.jpg"
+          alt="Diani Beach"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-7xl mx-auto">
           <Link
@@ -96,12 +117,20 @@ export default function DianiBeachPage() {
           <div className="lg:col-span-2">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
               <h2 className="font-serif text-3xl font-bold mb-6">About This Destination</h2>
+              <p className="text-gray-300 leading-relaxed mb-6">
+                Diani Beach stretches along Kenya&apos;s stunning south coast, offering 17 kilometers
+                of pristine white sand kissed by warm turquoise waters. It is one of the most
+                celebrated beaches in East Africa and a favorite for travelers seeking both leisure
+                and adventure.
+              </p>
               <p className="text-gray-300 leading-relaxed mb-8">
-                Diani Beach stretches along Kenya's stunning south coast, offering 17 kilometers of pristine white sand kissed by warm turquoise waters. Voted Africa's leading beach destination multiple times, it's a paradise for water sports enthusiasts and relaxation seekers alike. Explore vibrant coral reefs, kite-surf across lagoons, or simply unwind beneath swaying palms.
+                From diving and snorkeling to laid-back beach afternoons and sunset dinners, Diani
+                blends tropical beauty with world-class resorts, vibrant marine life, and a relaxed
+                coastal atmosphere.
               </p>
 
               <h3 className="font-serif text-2xl font-bold mb-6">Highlights</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
                 {highlights.map((item, i) => (
                   <motion.div
                     key={i}
@@ -111,8 +140,27 @@ export default function DianiBeachPage() {
                     viewport={{ once: true }}
                     className="bg-card border border-card-border rounded-xl p-4 flex items-center gap-3"
                   >
-                    <div className="w-2 h-2 rounded-full bg-accent"></div>
+                    <FaUmbrellaBeach className="text-accent flex-shrink-0" />
                     <span className="text-sm">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <h3 className="font-serif text-2xl font-bold mb-6 text-accent">
+                Hidden Gems & Coastal Secrets
+              </h3>
+              <div className="space-y-6 mb-8">
+                {hiddenGems.map((gem, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.2 }}
+                    viewport={{ once: true }}
+                    className="bg-gradient-to-r from-card to-card/50 border-l-4 border-accent p-6 rounded-r-xl"
+                  >
+                    <h4 className="font-serif text-xl font-bold mb-2 text-white">{gem.title}</h4>
+                    <p className="text-gray-300 text-sm leading-relaxed">{gem.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -154,34 +202,6 @@ export default function DianiBeachPage() {
               Book This Experience
             </button>
           </motion.div>
-		  <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "TouristDestination",
-      "name": "Diani Beach",
-      "description": "Pristine white sands meet turquoise waters along Kenya's stunning coastline.",
-      "url": "https://hospitalityarc.com/destinations/diani-beach",
-      "touristType": ["Beach Lovers", "Families", "Adventure Seekers"],
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "-4.2933",
-        "longitude": "39.5667"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "620",
-        "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "1250"
-      }
-    })
-  }}
-/>
         </div>
       </section>
 
