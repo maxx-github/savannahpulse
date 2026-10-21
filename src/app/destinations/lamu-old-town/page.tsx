@@ -17,16 +17,16 @@ const highlights = [
 const hiddenGems = [
   {
     title: "The Swahili Doors",
-    desc: "Lamu's ornate wooden doors are masterpieces telling stories of wealth and heritage. The carved pillars represent date palms (fertility), while Indian-style brass studs protected against war elephants - a tradition brought from Oman."
+    desc: "Lamu's ornate wooden doors are masterpieces telling stories of wealth and heritage. The carved pillars represent date palms (fertility), while Indian-style brass studs protected against harsh weather and symbolized strength.",
   },
   {
     title: "No Cars, Only Donkeys",
-    desc: "Lamu has no cars - only donkeys and boats. The island has over 3,000 donkeys, more than any other place in Kenya. These gentle creatures are the backbone of transport, carrying everything from building materials to water."
+    desc: "Lamu has no cars - only donkeys and boats. The island has over 3,000 donkeys, more than any other place in Kenya. These gentle creatures are the backbone of transport, carrying everything from food supplies to building materials.",
   },
   {
     title: "Ancient Persian & Arab Roots",
-    desc: "Lamu was founded in 1370 AD and has been continuously inhabited for over 700 years. The coral stone buildings use a unique lime mortar made from burning coral, a technique brought by Persian and Arab traders."
-  }
+    desc: "Lamu was founded in 1370 AD and has been continuously inhabited for over 700 years. The coral stone buildings use a unique lime mortar made from burning coral, a technique brought by Persian and Arab traders.",
+  },
 ];
 
 export default function LamuOldTownPage() {
@@ -88,7 +88,13 @@ export default function LamuOldTownPage() {
   return (
     <div className="pt-20 bg-dark min-h-screen">
       <section className="relative h-[70vh] overflow-hidden">
-        <Image src="/images/heroes/lamu-old-town.jpg" alt="Lamu Old Town" fill className="object-cover" priority />
+        <Image
+          src="/images/destinations/lamu-old-town.jpg"
+          alt="Lamu Old Town"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-7xl mx-auto">
           <Link
@@ -112,10 +118,16 @@ export default function LamuOldTownPage() {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
               <h2 className="font-serif text-3xl font-bold mb-6">About This Destination</h2>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Lamu Old Town is East Africa's oldest and best-preserved Swahili settlement, a UNESCO World Heritage Site that has retained its traditional character for over 700 years. Wander through labyrinthine alleys past intricately carved doors, coral stone buildings, and hidden courtyards. No cars exist on the island — only donkeys and dhows, creating a timeless atmosphere.
+                Lamu Old Town is East Africa&apos;s oldest and best-preserved Swahili settlement, a
+                UNESCO World Heritage Site that has retained its traditional character for over 700
+                years. Wander through centuries-old streets, hidden courtyards, and ancient doors
+                that still carry stories of trade, faith, and culture.
               </p>
               <p className="text-gray-300 leading-relaxed mb-8">
-                Founded in 1370 AD, Lamu has been a melting pot of African, Arab, Persian, Indian, and European influences. The town's architecture, cuisine, and culture reflect centuries of trade along the Indian Ocean, making it one of the most historically significant sites on the East African coast.
+                Founded in 1370 AD, Lamu has been a melting pot of African, Arab, Persian, Indian,
+                and European influences. The town&apos;s architecture, cuisine, and culture reflect
+                centuries of trade and community, making it a deeply cultural and atmospheric
+                destination.
               </p>
 
               <h3 className="font-serif text-2xl font-bold mb-6">Highlights</h3>
@@ -135,7 +147,9 @@ export default function LamuOldTownPage() {
                 ))}
               </div>
 
-              <h3 className="font-serif text-2xl font-bold mb-6 text-accent">Hidden Gems & Cultural Secrets</h3>
+              <h3 className="font-serif text-2xl font-bold mb-6 text-accent">
+                Hidden Gems & Cultural Secrets
+              </h3>
               <div className="space-y-6 mb-8">
                 {hiddenGems.map((gem, i) => (
                   <motion.div
@@ -265,69 +279,6 @@ export default function LamuOldTownPage() {
           </motion.div>
         </motion.div>
       )}
-	 <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "TouristDestination",
-      "name": "Lamu Old Town",
-      "description": "Wander through centuries-old Swahili architecture, carved doorways, and hidden courtyards in East Africa's oldest living town.",
-      "url": "https://hospitalityarc.com/destinations/lamu-old-town",
-      "touristType": ["History Buffs", "Culture Enthusiasts", "Architecture Lovers", "Beach Lovers"],
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "-2.2717",
-        "longitude": "40.9020"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "Kenya",
-        "addressRegion": "Lamu County"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "480",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "1876"
-      },
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "Founded",
-          "value": "1370 AD"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "UNESCO Status",
-          "value": "World Heritage Site"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Best Time to Visit",
-          "value": "June to October, November to March"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Recommended Duration",
-          "value": "3-5 days"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Highlights",
-          "value": "Swahili Architecture, Dhow Cruises, No Cars (Donkeys Only)"
-        }
-      ]
-    })
-  }}
-/> 
-	  
-	  
     </div>
   );
 }
