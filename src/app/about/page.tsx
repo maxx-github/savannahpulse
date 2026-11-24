@@ -7,9 +7,7 @@ const team = [
   {
     name: "Anthony Solomon",
     role: "Founder & Lead Guide",
-    bio: "Meet Anthony, Founder of Savannah Pulse
-
-Anthony was born and raised in Mombasa, where the Indian Ocean breeze, Swahili rhythms, and the scent of spiced coastal cooking shaped how he sees the world. From those early days, he knew he wanted to share the beauty of his homeland with others.
+    bio: "Meet Anthony, Founder of Savannah Pulse. Anthony was born and raised in Mombasa, where the Indian Ocean breeze, Swahili rhythms, and the scent of spiced coastal cooking shaped how he sees the world. From those early days, he knew he wanted to share the beauty of his homeland with others.
 
 Over the years, he has explored every corner of Kenya, from the golden plains of the Maasai Mara to the snow-capped peaks of Mount Kenya, from the ancient streets of Lamu to the shores of the Rift Valley lakes. Along the way, he has built friendships with local guides, artisans, and communities who open their doors to him, and now to you.
 
