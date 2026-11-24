@@ -7,7 +7,17 @@ const team = [
   {
     name: "Anthony Solomon",
     role: "Founder & Lead Guide",
-    bio: "Born and raised in Mombasa, Anthony has spent 20 years exploring every corner of Kenya. His passion for sharing authentic cultural experiences led to the creation of SavannahPulse.",
+    bio: "Meet Anthony, Founder of Savannah Pulse
+
+Anthony was born and raised in Mombasa, where the Indian Ocean breeze, Swahili rhythms, and the scent of spiced coastal cooking shaped how he sees the world. From those early days, he knew he wanted to share the beauty of his homeland with others.
+
+Over the years, he has explored every corner of Kenya, from the golden plains of the Maasai Mara to the snow-capped peaks of Mount Kenya, from the ancient streets of Lamu to the shores of the Rift Valley lakes. Along the way, he has built friendships with local guides, artisans, and communities who open their doors to him, and now to you.
+
+That love for real, human connection is the heart of SavannahPulse, which Anthony founded to offer travelers authentic cultural experiences that go beyond the usual tourist trail. With him, you don't just see Kenya, you feel its pulse.
+
+Today, Anthony is based in Dubai, one of the world's most visited destinations. There he continues to deepen his passion for travel and hospitality, bringing global insight and world-class service standards back to every journey he creates.
+
+Come explore with someone who knows Kenya like home, because it is.",
     image: "/images/team/anthony-solomon.jpeg",
   },
   {
@@ -33,7 +43,7 @@ const values = [
   {
     icon: FaAward,
     title: "Authentic Experiences",
-    desc: "No tourist traps. Only genuine cultural connections and wild adventures.",
+    desc: "Genuine cultural connections and wild adventures.",
   },
   {
     icon: FaMapMarkerAlt,
